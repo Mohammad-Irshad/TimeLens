@@ -6,6 +6,7 @@ import { loginUser } from "../../app/features/userSlice";
 export const Home = () => {
 
   const [message, setMessage] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const [loginData, setLoginData] = useState({
     email: 'kingkhan@gmail.com',
@@ -32,10 +33,12 @@ export const Home = () => {
     }
 
     try {
+      setIsLoading(true)
       const result = await dispatch(loginUser(loginData)).unwrap()
       if (result) {
         sessionStorage.setItem("access_token", result.accessToken)
         navigate('/gallery')
+        setIsLoading(false)
       }
     } catch (error) {
       console.log(error)
@@ -67,7 +70,14 @@ export const Home = () => {
           </div>
           {message && <p className="text-center text-danger">{message}</p>}
           <div className="d-grid">
-            <button className="btn btn-primary" onClick={handleLogin}>Login</button>
+            {isLoading ?
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              :
+              <button className="btn btn-primary" onClick={handleLogin}>Login</button>
+            }
+
           </div>
           <p className="text-center mt-3">OR</p>
           <div className="d-flex align-items-center justify-content-center">
