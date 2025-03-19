@@ -42,6 +42,7 @@ export const Home = () => {
       }
     } catch (error) {
       console.log(error)
+      setMessage("Login failed try again.")
       setIsLoading(false)
     }
   }
