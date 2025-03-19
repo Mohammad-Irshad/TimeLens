@@ -42,6 +42,7 @@ export const Home = () => {
       }
     } catch (error) {
       console.log(error)
+      setIsLoading(false)
     }
   }
 
@@ -71,7 +72,7 @@ export const Home = () => {
           {message && <p className="text-center text-danger">{message}</p>}
           <div className="d-grid">
             {isLoading ?
-              <div class="spinner-border text-primary" role="status">
+              <div class="spinner-border text-primary text-center" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
               :
