@@ -8,7 +8,7 @@ export const createAlbum = createAsyncThunk(
     if (!token) return rejectWithValue("No token found");
     try {
       const response = await axios.post(
-        `http://localhost:4000/albums`,
+        `https://timelens-server.vercel.app/albums`,
         albumData,
         {
           headers: {
@@ -30,7 +30,7 @@ export const getAllTheAlbums = createAsyncThunk(
     if (!token) return rejectWithValue("No token found");
     try {
       const response = await axios.get(
-        `http://localhost:4000/getAlbums/${ownerId}`,
+        `https://timelens-server.vercel.app/getAlbums/${ownerId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ export const updateAAlbum = createAsyncThunk(
     if (!token) return rejectWithValue("No token found");
     try {
       const response = await axios.put(
-        `http://localhost:4000/albums/${id}`,
+        `https://timelens-server.vercel.app/albums/${id}`,
         updatedData,
         {
           headers: {
@@ -75,7 +75,7 @@ export const deleteAAlbum = createAsyncThunk(
     if (!token) return rejectWithValue("No token found");
     try {
       const response = await axios.delete(
-        `http://localhost:4000/albums/${id}`,
+        `https://timelens-server.vercel.app/albums/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -97,7 +97,7 @@ export const getAllTheSharedAlbums = createAsyncThunk(
     if (!token) return rejectWithValue("No token found");
     try {
       const response = await axios.get(
-        `http://localhost:4000/albums/${emailID}/share`,
+        `https://timelens-server.vercel.app/albums/${emailID}/share`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

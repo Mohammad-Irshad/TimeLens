@@ -17,10 +17,8 @@ export const uploadAImage = createAsyncThunk(
       formData.append("tags", JSON.stringify(imageData.tags)); // Convert array to JSON
       formData.append("persons", JSON.stringify(imageData.persons)); // Convert array to JSON
 
-      console.log("What I try to send:", formData);
-
       const response = await axios.post(
-        `http://localhost:4000/albums/${imageData.albumId}/images`,
+        `https://timelens-server.vercel.ap/albums/${imageData.albumId}/images`,
         formData,
         {
           headers: {
@@ -29,7 +27,6 @@ export const uploadAImage = createAsyncThunk(
         }
       );
 
-      console.log("Image upload data received from backend:", response.data);
       return response.data;
     } catch (error) {
       console.error("Upload error:", error);
@@ -44,12 +41,15 @@ export const getAllTheImages = createAsyncThunk(
     const token = sessionStorage.getItem("access_token");
     if (!token) return rejectWithValue("No token found");
     try {
-      const response = await axios.get(`http://localhost:4000/images`, {
-        headers: {
-          logedinuserid: ownerId,
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `https://timelens-server.vercel.app/images`,
+        {
+          headers: {
+            logedinuserid: ownerId,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       console.error("Image fetch error:", error);
@@ -65,7 +65,7 @@ export const getAnAlbumImages = createAsyncThunk(
     if (!token) return rejectWithValue("No token found");
     try {
       const response = await axios.get(
-        `http://localhost:4000/images/${albumId}`,
+        `https://timelens-server.vercel.app/images/${albumId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,7 +87,7 @@ export const updateTheImage = createAsyncThunk(
     if (!token) return rejectWithValue("No token found");
     try {
       const response = await axios.put(
-        `http://localhost:4000/images/${id}`,
+        `https://timelens-server.vercel.app/images/${id}`,
         updatedData,
         {
           headers: {
@@ -110,7 +110,7 @@ export const deleteTheImage = createAsyncThunk(
     if (!token) return rejectWithValue("No token found");
     try {
       const response = await axios.delete(
-        `http://localhost:4000/images/${id}`,
+        `https://timelens-server.vercel.app/images/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

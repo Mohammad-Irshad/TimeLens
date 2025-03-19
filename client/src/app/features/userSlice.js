@@ -7,7 +7,7 @@ export const signUpUser = createAsyncThunk(
   async (signUpData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/userSignup`,
+        `https://timelens-server.vercel.app/userSignup`,
         signUpData
       );
       return response.data;
@@ -24,7 +24,7 @@ export const loginUser = createAsyncThunk(
   async (loginData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/userLogin`,
+        `https://timelens-server.vercel.app/userLogin`,
         loginData
       );
       return response.data;
