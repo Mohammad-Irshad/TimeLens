@@ -37,7 +37,7 @@ const PORT = process.env.PORT || 4000;
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // Allow frontend domain
+    origin: "https://timelens-webapp.vercel.app", // Allow frontend domain
     credentials: true, // Allow cookies & authentication headers
   })
 );
