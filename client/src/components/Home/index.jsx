@@ -72,13 +72,14 @@ export const Home = () => {
           {message && <p className="text-center text-danger">{message}</p>}
           <div className="d-grid">
             {isLoading ?
-              <div class="spinner-border text-primary text-center" role="status">
-                <span class="visually-hidden">Loading...</span>
+              <div className="d-flex justify-content-center align-items-center">
+                <div class="spinner-border text-primary text-center" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               </div>
               :
               <button className="btn btn-primary" onClick={handleLogin}>Login</button>
             }
-
           </div>
           <p className="text-center mt-3">OR</p>
           <div className="d-flex align-items-center justify-content-center">
