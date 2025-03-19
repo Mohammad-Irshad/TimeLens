@@ -35,12 +35,14 @@ const app = express();
 app.use(cookieParser());
 const PORT = process.env.PORT || 4000;
 
-app.use(
-  cors({
-    origin: "https://timelens-webapp.vercel.app", // Allow frontend domain
-    credentials: true, // Allow cookies & authentication headers
-  })
-);
+app.use(cors());
+
+// app.use(
+//   cors({
+//     origin: "https://timelens-webapp.vercel.app", // Allow frontend domain
+//     credentials: true, // Allow cookies & authentication headers
+//   })
+// );
 app.use(express.json());
 
 // Multer
