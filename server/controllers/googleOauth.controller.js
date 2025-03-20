@@ -7,7 +7,7 @@ const { setSecureCookie } = require("../services");
 const PORT = process.env.PORT || 4000;
 
 const googleAuth = (req, res) => {
-  const googleAuthUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=http://localhost:${PORT}/auth/google/callback&response_type=code&scope=profile email`;
+  const googleAuthUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=https://timelens-server.vercel.app/auth/google/callback&response_type=code&scope=profile email`;
 
   res.redirect(googleAuthUrl);
 };
