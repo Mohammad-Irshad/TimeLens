@@ -32,23 +32,28 @@ const { verifyGoogelAccessToken, verifyJWT } = require("./middleware");
 require("dotenv").config();
 
 const app = express();
-app.use(cookieParser());
+
 const PORT = process.env.PORT || 4000;
 
 // app.use(cors());
 
 const allowedOrigins = [
   "https://timelens-webapp.vercel.app", // ✅ Add your frontend URL here
-  "http://localhost:3000", // Optional, for local dev
+  "http://localhost:5173", // Optional, for local dev
 ];
 
 app.use(
   cors({
     origin: allowedOrigins,
-    credentials: true, // ✅ VERY IMPORTANT! This allows cookies to be sent.
+    credentials: true, // ✅ VERY IMPORTANT! Ensures cookies are sent
+    optionsSuccessStatus: 200,
   })
 );
+
+app.options("*", cors());
+
 app.use(express.json());
+app.use(cookieParser());
 
 // Multer
 

@@ -131,7 +131,8 @@ const Gallery = () => {
                         <h3>Your Photos</h3>
                         <button className='btn btn-success' data-bs-toggle="modal" data-bs-target="#photoModal">+ Add Photo</button>
                     </div>
-                    <Photo allImages={filteredImages} />
+                    {imageStatus === 'loading' && <p>Loading...</p>}
+                    {imageStatus === 'success' && <Photo allImages={filteredImages} />}
 
                 </div>
             </div>
