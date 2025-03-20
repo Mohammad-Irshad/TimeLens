@@ -35,14 +35,19 @@ const app = express();
 app.use(cookieParser());
 const PORT = process.env.PORT || 4000;
 
-app.use(cors());
+// app.use(cors());
 
-// app.use(
-//   cors({
-//     origin: "https://timelens-webapp.vercel.app", // Allow frontend domain
-//     credentials: true, // Allow cookies & authentication headers
-//   })
-// );
+const allowedOrigins = [
+  "https://timelens-webapp.vercel.app", // ✅ Add your frontend URL here
+  "http://localhost:3000", // Optional, for local dev
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true, // ✅ VERY IMPORTANT! This allows cookies to be sent.
+  })
+);
 app.use(express.json());
 
 // Multer
