@@ -57,7 +57,7 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
 
     const validateUser = async (email) => {
         try {
-            const response = await axios.get(`http://localhost:4000/user/validate-user-email?email=${email}`)
+            const response = await axios.get(`https://timelens-server.vercel.app/user/validate-user-email?email=${email}`)
             return response.data.isValid
         } catch (error) {
             console.error("Error validating user email:", error);
@@ -126,9 +126,6 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
 
     return (
         <div className="row mt-4">
-            {sharedAlbums && sharedAlbums.length === 0 && (
-                <p className="text-center text-muted fs-3">No album is shared with you yet!</p>
-            )}
 
             {sharedAlbums && (sharedAlbums || []).length > 0 ? (
                 (sharedAlbums || []).map((alb) => (

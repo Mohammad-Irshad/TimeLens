@@ -12,6 +12,7 @@ const Gallery = () => {
 
     const [fileValidationError, setFileValidationError] = useState('')
     const [addImageLoader, setAddImageLoader] = useState(false)
+    const [imagesLoading, setImagesLoading] = useState(true)
 
 
     const { allAlbums, status: albumStatus, error: albumError } = useSelector((state) => state.album);
@@ -110,10 +111,20 @@ const Gallery = () => {
     };
 
     useEffect(() => {
-        dispatch(getAllTheAlbums(imageAndMetaData.ownerId))
-        dispatch(getAllTheImages(logedInUser._id))
-        console.log("User state of Gallery called !")
-    }, [])
+        const fetchData = async () => {
+            try {
+                dispatch(getAllTheAlbums(imageAndMetaData.ownerId));
+                setImagesLoading(true); // Set loading to true while fetching
+                const result = await dispatch(getAllTheImages(logedInUser._id)).unwrap();
+                setFilteredImages(result.allImages); // Set images once fetched
+            } catch (error) {
+                console.error("Error while fetching data:", error);
+            } finally {
+                setImagesLoading(false); // Set loading to false after fetch
+            }
+        };
+        fetchData();
+    }, []);
 
 
     return (
@@ -131,8 +142,14 @@ const Gallery = () => {
                         <h3>Your Photos</h3>
                         <button className='btn btn-success' data-bs-toggle="modal" data-bs-target="#photoModal">+ Add Photo</button>
                     </div>
-                    {imageStatus === 'loading' && <p>Loading...</p>}
-                    {imageStatus === 'success' && <Photo allImages={filteredImages} />}
+                    {imagesLoading ? (
+                        <p>Loading images...</p> // Show loading while images are fetching
+                    ) : filteredImages.length === 0 ? (
+                        <p>You don't have any images.</p> // Only show this after fetching
+                    ) : (
+                        <Photo allImages={filteredImages} />
+                    )}
+
 
                 </div>
             </div>
