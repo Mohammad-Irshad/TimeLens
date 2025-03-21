@@ -27,12 +27,25 @@ const SharedWithMe = () => {
                 <div className="col-md-9 col-lg-10 bg-light p-4">
                     <h3 className='mb-3'>Albums shared with you</h3>
                     <hr />
-                    {albumsSharedwithMe &&
-                        <AlbumCard sharedAlbums={albumsSharedwithMe} />
-                    }
+                    {albumsSharedwithMe === undefined || albumsSharedwithMe === null ? (
+                        <div className="text-center mt-4">
+                            <div className="spinner-border text-primary" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                            <p className="mt-2 text-primary fw-bold">Fetching your shared albums... Hang tight! 😊</p>
+                        </div>
+                    ) : albumsSharedwithMe.length === 0 ? (
+                        <div className="text-center mt-4">
+                            <i className="bi bi-folder-x text-danger" style={{ fontSize: "2rem" }}></i>
+                            <p className="mt-2 text-danger fw-bold">No shared albums found. Ask your friends to share some memories with you! 🎁</p>
+                        </div>
+                    ) : (
+                        <AlbumCard allAlbums={null} sharedAlbums={albumsSharedwithMe} />
+                    )}
+
+
                 </div>
             </div>
-
         </div>
     )
 }

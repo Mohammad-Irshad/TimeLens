@@ -141,113 +141,113 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
                         </div>
                     </div>
                 ))
-            ) : (albums || []).length === 0 ? (
-                sharedAlbums === null ? <p className="text-center text-muted fs-3">You don't have any album</p> : ''
-            ) : (
-                (albums || []).map((alb) => (
-                    <div className="col-md-4 mb-3" key={alb._id}>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h4 className='card-title'>{alb.name}</h4>
-                                <Link to={`/album/${alb._id}/${alb.name.replace(/\s+/g, '-')}?desc=${encodeURIComponent(alb.description)}&isShared=false`}>
-                                    <img src={`https://assets.serenity.co.uk/38000-38999/38650/720x480.jpg`} alt='albumThumbnailImage' className='img-fluid rounded mb-3' style={{ cursor: "pointer" }} />
-                                </Link>
+            )
+                :
+                (
+                    (albums || []).map((alb) => (
+                        <div className="col-md-4 mb-3" key={alb._id}>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <h4 className='card-title'>{alb.name}</h4>
+                                    <Link to={`/album/${alb._id}/${alb.name.replace(/\s+/g, '-')}?desc=${encodeURIComponent(alb.description)}&isShared=false`}>
+                                        <img src={`https://assets.serenity.co.uk/38000-38999/38650/720x480.jpg`} alt='albumThumbnailImage' className='img-fluid rounded mb-3' style={{ cursor: "pointer" }} />
+                                    </Link>
 
-                                <p>{alb.description}</p>
-                                <div className='d-flex justify-content-around'>
-                                    <FontAwesomeIcon icon={faFilePen}
-                                        style={{ color: "#007bff", cursor: "pointer" }}
-                                        title='Edit'
-                                        data-bs-toggle="modal"
-                                        data-bs-target={`#editAlbumModal-${alb._id}`}
-                                        onClick={() => setDesc(alb.description)}
-                                    />
-                                    <FontAwesomeIcon icon={faShareNodes}
-                                        style={{ color: "#fd7e14", cursor: "pointer" }}
-                                        title='Share'
-                                        data-bs-toggle="modal"
-                                        data-bs-target={`#editAlbumShareModal-${alb._id}`}
-                                        onClick={() => { setShareAlbumWith(''), setEmailError('') }}
-                                    />
-                                    <FontAwesomeIcon icon={faTrash}
-                                        style={{ color: "#dc3545", cursor: "pointer" }}
-                                        title='Delete'
-                                        onClick={() => albumDeleteHandler(alb)}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <section>
-                            <div className="modal fade" id={`editAlbumModal-${alb._id}`} tabIndex="-1" aria-labelledby={`editAlbumModalLabel-${alb._id}`} aria-hidden="true">
-                                <div className="modal-dialog">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h1 className="modal-title fs-5" id={`editAlbumModalLabel-${alb._id}`}>Edit in {alb.name}</h1>
-                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <input type='text' value={desc} onChange={(e) => setDesc(e.target.value)} className='form-control' />
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button"
-                                                className="btn btn-primary"
-                                                data-bs-dismiss="modal"
-                                                onClick={() => handelDescUpdate(alb)}
-                                            >Save changes</button>
-                                        </div>
+                                    <p>{alb.description}</p>
+                                    <div className='d-flex justify-content-around'>
+                                        <FontAwesomeIcon icon={faFilePen}
+                                            style={{ color: "#007bff", cursor: "pointer" }}
+                                            title='Edit'
+                                            data-bs-toggle="modal"
+                                            data-bs-target={`#editAlbumModal-${alb._id}`}
+                                            onClick={() => setDesc(alb.description)}
+                                        />
+                                        <FontAwesomeIcon icon={faShareNodes}
+                                            style={{ color: "#fd7e14", cursor: "pointer" }}
+                                            title='Share'
+                                            data-bs-toggle="modal"
+                                            data-bs-target={`#editAlbumShareModal-${alb._id}`}
+                                            onClick={() => { setShareAlbumWith(''), setEmailError('') }}
+                                        />
+                                        <FontAwesomeIcon icon={faTrash}
+                                            style={{ color: "#dc3545", cursor: "pointer" }}
+                                            title='Delete'
+                                            onClick={() => albumDeleteHandler(alb)}
+                                        />
                                     </div>
                                 </div>
                             </div>
-                        </section>
 
-                        <section>
-                            <div className="modal fade" id={`editAlbumShareModal-${alb._id}`} tabIndex="-1" aria-labelledby={`editAlbumShareModalLabel-${alb._id}`} aria-hidden="true">
-                                <div className="modal-dialog">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h1 className="modal-title fs-5" id={`editAlbumShareModalLabel-${alb._id}`}>Edit shared user list - {alb.name}</h1>
-                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <input type='email' value={shareAlbumWith} placeholder='Enter email to whome you want to share...' onChange={(e) => setShareAlbumWith(e.target.value)} className='form-control' />
-                                            {emailError && <p className='text-danger mt-3'>{emailError}</p>}
-                                            {addEmailSuccesslMessage && <p className='text-success mt-3'>{addEmailSuccesslMessage}</p>}
-                                            <hr />
-                                            <div>
-                                                <h5>List of shared users</h5>
-                                                <ul className='list-group'>
-                                                    {
-                                                        alb.sharedWith.length > 0 ? alb.sharedWith.map((mail, ind) => (
-                                                            <li key={`${mail}/${ind}`} className='list-group-item d-flex justify-content-between align-items-center'>
-                                                                <span>{mail}</span>
-                                                                <button className='btn btn-sm btn-danger' onClick={() => removeEmailHandler({ alb, mail })}>Delete</button>
-                                                            </li>
-                                                        ))
-                                                            :
-                                                            <p>Album is not shared with anyone yet</p>
-                                                    }
-                                                </ul>
+                            <section>
+                                <div className="modal fade" id={`editAlbumModal-${alb._id}`} tabIndex="-1" aria-labelledby={`editAlbumModalLabel-${alb._id}`} aria-hidden="true">
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h1 className="modal-title fs-5" id={`editAlbumModalLabel-${alb._id}`}>Edit in {alb.name}</h1>
+                                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <input type='text' value={desc} onChange={(e) => setDesc(e.target.value)} className='form-control' />
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button"
+                                                    className="btn btn-primary"
+                                                    data-bs-dismiss="modal"
+                                                    onClick={() => handelDescUpdate(alb)}
+                                                >Save changes</button>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </section>
 
-                                        <div className="modal-footer">
-                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button"
-                                                className="btn btn-primary"
-                                                // data-bs-dismiss="modal"
-                                                onClick={() => albumShareHandler(alb)}
-                                            >Add Mail</button>
+                            <section>
+                                <div className="modal fade" id={`editAlbumShareModal-${alb._id}`} tabIndex="-1" aria-labelledby={`editAlbumShareModalLabel-${alb._id}`} aria-hidden="true">
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h1 className="modal-title fs-5" id={`editAlbumShareModalLabel-${alb._id}`}>Edit shared user list - {alb.name}</h1>
+                                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <input type='email' value={shareAlbumWith} placeholder='Enter email to whome you want to share...' onChange={(e) => setShareAlbumWith(e.target.value)} className='form-control' />
+                                                {emailError && <p className='text-danger mt-3'>{emailError}</p>}
+                                                {addEmailSuccesslMessage && <p className='text-success mt-3'>{addEmailSuccesslMessage}</p>}
+                                                <hr />
+                                                <div>
+                                                    <h5>List of shared users</h5>
+                                                    <ul className='list-group'>
+                                                        {
+                                                            alb.sharedWith.length > 0 ? alb.sharedWith.map((mail, ind) => (
+                                                                <li key={`${mail}/${ind}`} className='list-group-item d-flex justify-content-between align-items-center'>
+                                                                    <span>{mail}</span>
+                                                                    <button className='btn btn-sm btn-danger' onClick={() => removeEmailHandler({ alb, mail })}>Delete</button>
+                                                                </li>
+                                                            ))
+                                                                :
+                                                                <p>Album is not shared with anyone yet</p>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
 
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button"
+                                                    className="btn btn-primary"
+                                                    // data-bs-dismiss="modal"
+                                                    onClick={() => albumShareHandler(alb)}
+                                                >Add Mail</button>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
-                    </div>
-                ))
-            )
+                            </section>
+                        </div>
+                    ))
+                )
             }
 
 

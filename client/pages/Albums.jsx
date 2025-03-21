@@ -7,8 +7,8 @@ import AlbumCard from '../src/components/AlbumCard'
 const Albums = () => {
 
     const logedInUser = useSelector((state) => state?.user?.logedInUser)
-    const { allAlbums } = useSelector((state) => state.album)
-    const [filteredAlbum, setFilteredAlbum] = useState(allAlbums)
+    const { allAlbums, status } = useSelector((state) => state.album)
+    const [filteredAlbum, setFilteredAlbum] = useState([])
 
     const [newAlbumData, setNewAlbumData] = useState({
         name: '',
@@ -51,9 +51,16 @@ const Albums = () => {
     useEffect(() => {
         if (logedInUser) {
             dispatch(getAllTheAlbums(logedInUser?._id))
+        }
+    }, [logedInUser, dispatch]) // ✅ Run only when user changes
+
+    // ✅ Update filteredAlbum when allAlbums changes
+    useEffect(() => {
+        if (status === 'success' && allAlbums?.length > 0) {
             setFilteredAlbum(allAlbums)
         }
-    }, [logedInUser])
+    }, [allAlbums, status])
+
 
 
     return (
@@ -70,7 +77,22 @@ const Albums = () => {
                         <h3>Your Albums</h3>
                         <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#albumModal">+ Add Album</button>
                     </div>
-                    <AlbumCard allAlbums={filteredAlbum} />
+                    {filteredAlbum === 'loading' ? (
+                        <div className="text-center mt-4">
+                            <div className="spinner-border text-success" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                            <p className="mt-2 text-success fw-bold">Fetching your albums... Please wait! 🎵</p>
+                        </div>
+                    ) : filteredAlbum.length === 0 ? (
+                        <div className="text-center mt-4">
+                            <p className="text-danger fw-bold">No albums found. Start creating your memories! 🎨</p>
+                        </div>
+                    ) : (
+                        <AlbumCard allAlbums={filteredAlbum} />
+                    )}
+
+
                 </div>
             </div>
 

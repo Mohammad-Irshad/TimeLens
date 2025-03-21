@@ -143,14 +143,21 @@ const Gallery = () => {
                         <button className='btn btn-success' data-bs-toggle="modal" data-bs-target="#photoModal">+ Add Photo</button>
                     </div>
                     {imagesLoading ? (
-                        <p>Loading images...</p> // Show loading while images are fetching
+                        <div className="text-center mt-4">
+                            <div className="spinner-border text-success" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                            <p className="mt-2 text-success fw-bold">Fetching your images... Hang tight! 📸</p>
+                        </div>
+
                     ) : filteredImages.length === 0 ? (
-                        <p>You don't have any images.</p> // Only show this after fetching
+                        <div className="text-center mt-4">
+                            <i className="bi bi-image text-danger" style={{ fontSize: "2rem" }}></i>
+                            <p className="mt-2 text-danger fw-bold">No images found. Time to capture some amazing moments! 🎥✨</p>
+                        </div>
                     ) : (
                         <Photo allImages={filteredImages} />
                     )}
-
-
                 </div>
             </div>
 

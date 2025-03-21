@@ -5,7 +5,7 @@ import Photo from '../src/components/Photo'
 
 const Favorite = () => {
 
-    const { allImages } = useSelector((state) => state.image)
+    const { allImages, status } = useSelector((state) => state.image)
 
     const favImages = allImages.filter((img) => img.isFavorite)
 
@@ -20,7 +20,22 @@ const Favorite = () => {
                 <div className="col-md-9 col-lg-10 bg-light p-4">
                     <h3 className='mb-3'>Your Favorite Images</h3>
                     <hr />
-                    <Photo allImages={favImages} />
+                    {status === 'loading' ? (
+                        <div className="text-center mt-4">
+                            <div className="spinner-border text-success" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                            <p className="mt-2 text-success fw-bold">Fetching your favorite images... Hold tight! 🌟</p>
+                        </div>
+                    ) : favImages.length === 0 ? (
+                        // No favorite images found
+                        <div className="text-center mt-4">
+                            <p className="text-danger fw-bold">No favorite images found. Start marking your favorites! ❤️</p>
+                        </div>
+                    ) : (
+                        // Display favorite images
+                        <Photo allImages={favImages} />
+                    )}
                 </div>
             </div>
 

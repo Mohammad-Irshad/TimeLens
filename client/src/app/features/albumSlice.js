@@ -119,7 +119,7 @@ export const albumSlice = createSlice({
   name: "album",
   initialState: {
     allAlbums: [],
-    albumsSharedwithMe: [],
+    albumsSharedwithMe: null,
     status: "idle",
     error: false,
   },
@@ -156,7 +156,7 @@ export const albumSlice = createSlice({
         let albumIndex = state.allAlbums.findIndex(
           (alb) => alb._id === action.payload.updatedAlbum._id
         );
-        if (albumIndex) {
+        if (albumIndex !== -1) {
           state.allAlbums[albumIndex] = action.payload.updatedAlbum;
         }
       })
