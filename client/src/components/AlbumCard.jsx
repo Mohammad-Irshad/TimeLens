@@ -134,7 +134,7 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
                             <div className='card-body'>
                                 <h4 className='card-title'>{alb.name}</h4>
                                 <Link to={`/album/${alb._id}/${alb.name.replace(/\s+/g, '-')}?desc=${encodeURIComponent(alb.description)}&isShared=true`}>
-                                    <img src={`https://assets.serenity.co.uk/38000-38999/38650/720x480.jpg`} alt='albumThumbnailImage' className='img-fluid rounded mb-3' />
+                                    <img src={`https://images.unsplash.com/photo-1511992243105-2992b3fd0410?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`} alt='albumThumbnailImage' className='img-fluid rounded mb-3' />
                                 </Link>
                                 <p>{alb.description}</p>
                             </div>
@@ -150,7 +150,7 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
                                 <div className='card-body'>
                                     <h4 className='card-title'>{alb.name}</h4>
                                     <Link to={`/album/${alb._id}/${alb.name.replace(/\s+/g, '-')}?desc=${encodeURIComponent(alb.description)}&isShared=false`}>
-                                        <img src={`https://assets.serenity.co.uk/38000-38999/38650/720x480.jpg`} alt='albumThumbnailImage' className='img-fluid rounded mb-3' style={{ cursor: "pointer" }} />
+                                        <img src={`https://images.unsplash.com/photo-1511992243105-2992b3fd0410?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`} alt='albumThumbnailImage' className='img-fluid rounded mb-3' style={{ cursor: "pointer" }} />
                                     </Link>
 
                                     <p>{alb.description}</p>

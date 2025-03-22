@@ -143,12 +143,18 @@ const Photo = ({ allImages, isShared = false }) => {
                                                     alt={`${image.name}_image`}
                                                 />
                                                 <div className="card-body">
-                                                    <p>
-                                                        Tags: <span className="text-primary">{image.tags}</span>
-                                                    </p>
-                                                    <p>
-                                                        Taged Peoples: <span className="text-primary">{image.persons}</span>
-                                                    </p>
+                                                    <div>
+                                                        <strong>Tags: </strong>
+                                                        <span className="badge bg-primary me-1">go</span>
+                                                        <span className="badge bg-primary me-1">goa</span>
+                                                    </div>
+
+                                                    <div className="mt-2">
+                                                        <strong>Tagged People: </strong>
+                                                        <span className="badge bg-success me-1">sun</span>
+                                                        <span className="badge bg-success me-1">moon</span>
+                                                    </div>
+
                                                     <hr />
                                                     <h6 className="mb-3">Add your comments below</h6>
                                                     <div className="d-flex justify-content-between">
