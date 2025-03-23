@@ -9,6 +9,7 @@ const Albums = () => {
     const logedInUser = useSelector((state) => state?.user?.logedInUser)
     const { allAlbums, status } = useSelector((state) => state.album)
     const [filteredAlbum, setFilteredAlbum] = useState([])
+    const [addAlbum, setAddAlbum] = useState(false)
 
     const [newAlbumData, setNewAlbumData] = useState({
         name: '',
@@ -25,22 +26,23 @@ const Albums = () => {
 
     const handleAddAlbum = async () => {
         try {
+            setAddAlbum(true)
             const response = await dispatch(createAlbum(newAlbumData)).unwrap();
 
             if (response) {
-                setFilteredAlbum((prevAlbums) => [...prevAlbums, response.album]); // Instant UI update
+                dispatch(getAllTheAlbums(logedInUser?._id));
                 setNewAlbumData({
                     name: '',
                     description: '',
-                    ownerId: logedInUser._id
+                    ownerId: logedInUser._id,
                 });
             }
         } catch (error) {
-            console.error("Failed to create album:", error);
+            console.error('Failed to create album:', error);
+        } finally {
+            setAddAlbum(false)
         }
     };
-
-
 
     const searchAlbum = (e) => {
         const value = e.target.value.toLowerCase().trim()
@@ -109,7 +111,20 @@ const Albums = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={handleAddAlbum}>Add Album</button>
+                            <button type="button" className="btn btn-primary" onClick={handleAddAlbum}>
+                                {addAlbum ? (
+                                    <>
+                                        <span
+                                            className="spinner-border spinner-border-sm text-success me-2"
+                                            role="status"
+                                            aria-hidden="true"
+                                        ></span>
+                                        Adding...
+                                    </>
+                                ) : (
+                                    'Add Album'
+                                )}
+                            </button>
                         </div>
                     </div>
                 </div>

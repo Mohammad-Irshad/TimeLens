@@ -13,6 +13,7 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
     const [shareAlbumWith, setShareAlbumWith] = useState('')
     const [emailError, setEmailError] = useState('')
     const [addEmailSuccesslMessage, setAddEmailSuccessMessage] = useState('')
+    const [addEmail, setAddEmail] = useState(false)
     const [albums, setAlbums] = useState(allAlbums)
 
 
@@ -68,16 +69,18 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
     const albumShareHandler = async (alb) => {
         setEmailError("");
         if (shareAlbumWith === "") return;
-
+        setAddEmail(true)
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailRegex.test(shareAlbumWith)) {
             setEmailError("Invalid Email address");
+            setAddEmail(false)
             return;
         }
 
         const isValidUser = await validateUser(shareAlbumWith);
         if (!isValidUser) {
             setEmailError("This email is not registered.");
+            setAddEmail(false)
             return;
         }
 
@@ -91,8 +94,10 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
         try {
             await dispatch(updateAAlbum({ id: alb._id, updatedData: { sharedWith: updatedSharedWith } }));
             setAddEmailSuccessMessage("Email added to share list successfully!");
+            setAddEmail(false)
         } catch (error) {
             console.error("Failed to share album:", error);
+            setAddEmailSuccessMessage("Failed to share album")
             setAlbums(albums); // Rollback UI
         }
 
@@ -100,6 +105,7 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
         setTimeout(() => {
             setAddEmailSuccessMessage("");
         }, 3000);
+        setAddEmail(false)
     };
 
     const removeEmailHandler = async ({ alb, mail }) => {
@@ -238,8 +244,20 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
                                                     className="btn btn-primary"
                                                     // data-bs-dismiss="modal"
                                                     onClick={() => albumShareHandler(alb)}
-                                                >Add Mail</button>
-
+                                                >
+                                                    {addEmail ? (
+                                                        <>
+                                                            <span
+                                                                className="spinner-border spinner-border-sm text-success me-2"
+                                                                role="status"
+                                                                aria-hidden="true"
+                                                            ></span>
+                                                            Adding...
+                                                        </>
+                                                    ) : (
+                                                        'Add Mail'
+                                                    )}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

@@ -13,6 +13,7 @@ const Gallery = () => {
     const [fileValidationError, setFileValidationError] = useState('')
     const [addImageLoader, setAddImageLoader] = useState(false)
     const [imagesLoading, setImagesLoading] = useState(true)
+    const [imageUploadMessage, setImageUploadMessage] = useState('')
 
 
     const { allAlbums, status: albumStatus, error: albumError } = useSelector((state) => state.album);
@@ -80,12 +81,17 @@ const Gallery = () => {
             setFilteredImages((prevImages) => {
                 return [...prevImages, result.uploadedImage]; // Ensure correct update
             })
+            setImageUploadMessage("Image uploaded successfully")
             clearFormData()
             await dispatch(getAllTheImages(logedInUser._id))
-            setAddImageLoader(false)
         } catch (error) {
             console.log("Can't upload the image : ", error)
+        } finally {
+            setAddImageLoader(false)
         }
+        setTimeout(() => {
+            setImageUploadMessage("")
+        }, 3000)
     }
 
     const clearFormData = () => {
@@ -185,11 +191,12 @@ const Gallery = () => {
                                 <label className='form-label mt-2' htmlFor='imageName'>Name the image: </label>
                                 <input type='text' placeholder='Enter Image name' id='imageName' className='form-control form-control-sm' name='name' value={imageAndMetaData.name} onChange={handleMetaDataChange} />
                                 <label className='form-label mt-2' htmlFor='imageTag'>Add tags: </label>
-                                <input type='text' placeholder='Enter Image tags seprated by comma (Ex: beach, sunset' id='imageTag' className='form-control form-control-sm' name='tags' value={imageAndMetaData.tags} onChange={handleMetaDataChange} />
+                                <input type='text' placeholder='Enter Image tags separated by comma (Ex: beach, sunset)' id='imageTag' className='form-control form-control-sm' name='tags' value={imageAndMetaData.tags} onChange={handleMetaDataChange} />
                                 <label className='form-label mt-2' htmlFor='imageTagPerson'>Tag people: </label>
-                                <input type='text' placeholder='Enter person name seprated by comma (Ex: shahrukh, salman' id='imageTagPerson' className='form-control form-control-sm' name='persons' value={imageAndMetaData.persons} onChange={handleMetaDataChange} />
+                                <input type='text' placeholder='Enter person name separated by comma (Ex: shahrukh, salman)' id='imageTagPerson' className='form-control form-control-sm' name='persons' value={imageAndMetaData.persons} onChange={handleMetaDataChange} />
                             </form>
                         </div>
+                        {imageUploadMessage && <p className='text-success'>{imageUploadMessage}</p>}
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={clearFormData}>Close</button>
 

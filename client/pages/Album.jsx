@@ -36,8 +36,15 @@ const Album = () => {
                 </div>
 
                 <div className="col-md-9 col-lg-10 bg-light p-4">
-                    <h3>Album : {albumName.replace(/-/g, ' ')}</h3>
-                    <h4>Description : {description}</h4>
+                    <div className="album-details p-3">
+                        <h3 className="fw-bold text-danger mb-2">
+                            Album: <span className="text-dark">{albumName.replace(/-/g, ' ')}</span>
+                        </h3>
+                        <h5 className="text-secondary">
+                            Description: <span className="text-muted">{description || 'No description provided'}</span>
+                        </h5>
+                    </div>
+
                     <hr />
                     <Photo allImages={isShared ? anAlbumImages : thisAlbumImages} isShared={isShared} />
                 </div>

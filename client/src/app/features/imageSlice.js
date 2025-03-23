@@ -18,7 +18,7 @@ export const uploadAImage = createAsyncThunk(
       formData.append("persons", JSON.stringify(imageData.persons)); // Convert array to JSON
 
       const response = await axios.post(
-        `https://timelens-server.vercel.ap/albums/${imageData.albumId}/images`,
+        `https://timelens-server.vercel.app/albums/${imageData.albumId}/images`,
         formData,
         {
           headers: {

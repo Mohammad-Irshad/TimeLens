@@ -6,6 +6,7 @@ import { signUpUser } from '../src/app/features/userSlice'
 const SignUp = () => {
 
     const [message, setMessage] = useState('')
+    const [isSigningUp, setIsSigningUp] = useState(false)
 
     const [userData, setUserData] = useState({
         name: '',
@@ -29,6 +30,7 @@ const SignUp = () => {
             return
         }
         try {
+            setIsSigningUp(true)
             const result = await dispatch(signUpUser(userData)).unwrap()
             if (result) {
                 setMessage("User Registered successfully!")
@@ -36,6 +38,8 @@ const SignUp = () => {
         } catch (error) {
             console.log(error)
             setMessage("User registration failed!")
+        } finally {
+            setIsSigningUp(false)
         }
     }
 
@@ -52,7 +56,20 @@ const SignUp = () => {
                     <input type='password' placeholder='Enter your password' name='password' value={userData.password} className='form-control' onChange={(e) => updateUserData(e)} /><br />
 
                     <div className='text-start'>
-                        <button className='btn btn-success' onClick={handleUserSingUp}>SignUp</button>
+                        <button className='btn btn-success' onClick={handleUserSingUp}>
+                            {isSigningUp ? (
+                                <>
+                                    <span
+                                        className="spinner-border spinner-border-sm text-light me-2"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    Signing Up...
+                                </>
+                            ) : (
+                                'SignUp'
+                            )}
+                        </button>
                     </div>
                     {message && <p className='mt-2'>{message}</p>}
                     <hr />

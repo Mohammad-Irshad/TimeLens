@@ -145,14 +145,11 @@ const Photo = ({ allImages, isShared = false }) => {
                                                 <div className="card-body">
                                                     <div>
                                                         <strong>Tags: </strong>
-                                                        <span className="badge bg-primary me-1">go</span>
-                                                        <span className="badge bg-primary me-1">goa</span>
+                                                        {image.tags.map((tag, ind) => <span className="badge bg-primary me-1" key={ind}>{tag}</span>)}
                                                     </div>
 
                                                     <div className="mt-2">
-                                                        <strong>Tagged People: </strong>
-                                                        <span className="badge bg-success me-1">sun</span>
-                                                        <span className="badge bg-success me-1">moon</span>
+                                                        <strong>Tagged People: </strong>{image.persons.map((per, ind) => <span className="badge bg-success me-1" key={ind}>{per}</span>)}
                                                     </div>
 
                                                     <hr />
@@ -204,7 +201,12 @@ const Photo = ({ allImages, isShared = false }) => {
                         </section>
                     </div>
                 )) : (
-                    <p>You don't have any image to display—add some!</p>
+                    <div className="text-center mt-4">
+                        <p className="text-danger fw-bold">
+                            You don't have any images to display — add some! 📸
+                        </p>
+                    </div>
+
                 )}
             </div>
         </>
