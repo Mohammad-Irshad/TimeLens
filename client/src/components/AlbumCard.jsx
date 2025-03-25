@@ -16,8 +16,6 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
     const [addEmail, setAddEmail] = useState(false)
     const [albums, setAlbums] = useState(allAlbums)
 
-
-    // const { allAlbums, status, error } = useSelector((state) => state.album)
     const { logedInUser } = useSelector((state) => state.user)
     const { allImages } = useSelector((state) => state.image)
     const dispatch = useDispatch()
