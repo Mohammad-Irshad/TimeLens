@@ -23,13 +23,13 @@ const addNewAlbum = async (req, res) => {
 
 const getAllAlbums = async (req, res) => {
   try {
-    const { ownerId } = req.params; // Extract ownerId from the URL
+    const { ownerId } = req.params;
 
     if (!ownerId) {
       return res.status(400).json({ message: "Owner ID is required" });
     }
 
-    const albums = await Album.find({ ownerId }).sort({ createdAt: -1 }); // Filter albums by ownerId
+    const albums = await Album.find({ ownerId }).sort({ createdAt: -1 });
 
     res.status(200).json({ message: "Albums fetched successfully!", albums });
   } catch (error) {
@@ -49,8 +49,8 @@ const updateAlbum = async (req, res) => {
       theAlbumId,
       updatedData,
       {
-        new: true, // Return the updated document
-        runValidators: true, // Ensure validation rules in the schema are applied
+        new: true,
+        runValidators: true,
       }
     );
 
@@ -101,7 +101,6 @@ const getAllSharedAlbums = async (req, res) => {
       return res.status(400).json({ message: "User email ID is required" });
     }
 
-    // Fetch albums where the user is in the sharedWith array
     const sharedAlbums = await Album.find({ sharedWith: userEmailId }).sort({
       createdAt: -1,
     });

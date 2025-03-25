@@ -46,7 +46,6 @@ const googleAuthCallback = async (req, res) => {
     let user = await User.findOne({ email });
 
     if (!user) {
-      // If user doesn't exist, create new one
       user = new User({
         googleId: id,
         name,
@@ -75,7 +74,6 @@ const googleAuthCallback = async (req, res) => {
 
 const getUserGoogleProfile = async (req, res) => {
   try {
-    console.log("inside getUserGoogleProfile");
     const { google_access_token: access_token } = req.cookies;
 
     const googleUserDataResponse = await axios.get(
@@ -89,7 +87,6 @@ const getUserGoogleProfile = async (req, res) => {
     let googleId = googleUserDataResponse.data.id;
 
     let user = await User.findOne({ googleId });
-    // console.log("User data at backend is : ", googleUserDataResponse.data);
     res.json(user);
   } catch (error) {
     console.error(

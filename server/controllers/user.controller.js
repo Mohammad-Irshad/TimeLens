@@ -19,11 +19,8 @@ const userSignUp = async (req, res) => {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    // Hash the password
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Add user
     const user = await User.create({
       name,
       email,
@@ -56,22 +53,16 @@ const userLogIn = async (req, res) => {
         .json({ message: "User does not exist, Please sign up and try again" });
     }
 
-    // validate the password using bcrypt
-
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid Password" });
     }
-
-    // Generate access token
 
     const accessToken = jwt.sign(
       { _id: user._id, name: user.name, email: user.email },
       process.env.SECRET_TOKEN_KEY,
       { expiresIn: "1h" }
     );
-
-    // Exclude sensitive info from user
 
     const logedInUser = await User.findById(user._id).select(
       "-password -createdAt -updatedAt"

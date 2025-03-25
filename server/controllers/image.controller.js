@@ -16,12 +16,10 @@ const uploadImage = async (req, res) => {
     const file = req.file;
     if (!file) return res.status(400).send("No file uploaded!");
 
-    // upload to cloudinary
     const result = await cloudinary.uploader.upload(file.path, {
       folder: "TimeLens",
     });
 
-    //save to mongoose
     const newImage = new Image({
       imageUrl: result.secure_url,
       albumId: req.body.albumId,
@@ -66,7 +64,6 @@ const getTheAlbumImages = async (req, res) => {
       return res.status(400).json({ message: "Album ID is required." });
     }
 
-    // Fetch images from database
     const albumImages = await Image.find({ albumId });
 
     if (!albumImages.length) {
@@ -92,8 +89,6 @@ const getTheAlbumImages = async (req, res) => {
 const updateImage = async (req, res) => {
   const imgId = req.params.imageId;
   const updatedData = req.body;
-  console.log("Image id is : ", imgId);
-  console.log("Updated data is : ", updatedData);
   try {
     const updatedImage = await Image.findByIdAndUpdate(imgId, updatedData, {
       new: true,
