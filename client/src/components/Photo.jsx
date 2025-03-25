@@ -11,26 +11,24 @@ const Photo = ({ allImages, isShared = false }) => {
     const { logedInUser } = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
-    // Update local photos when allImages prop changes
+
     useEffect(() => {
         setPhotos(allImages)
     }, [allImages])
 
     const favoriteToggler = (image) => {
         const newFavoriteStatus = !image.isFavorite
-        // Optimistically update the local state to reflect the change immediately
         setPhotos(prevPhotos =>
             prevPhotos.map(img =>
                 img._id === image._id ? { ...img, isFavorite: newFavoriteStatus } : img
             )
         )
-        // Dispatch actions to update the backend
+
         dispatch(toggleFavorite({ imageId: image._id }))
         dispatch(updateTheImage({ id: image._id, updatedData: { isFavorite: newFavoriteStatus } }))
     }
 
     const deleteHandler = async (image) => {
-        // Optimistically update UI by filtering out the deleted image
         const updatedPhotos = photos.filter((img) => img._id !== image._id);
         setPhotos(updatedPhotos);
 
@@ -38,14 +36,13 @@ const Photo = ({ allImages, isShared = false }) => {
             await dispatch(deleteTheImage(image._id));
         } catch (error) {
             console.error("Failed to delete image:", error);
-            // Rollback UI if deletion fails
             setPhotos(photos);
         }
     };
 
 
     const commentHandler = async (image) => {
-        if (!imageComment.trim()) return; // Prevent empty comments
+        if (!imageComment.trim()) return;
 
         const newComment = {
             userName: logedInUser.name,
@@ -53,7 +50,7 @@ const Photo = ({ allImages, isShared = false }) => {
             userComment: imageComment,
         };
 
-        // Optimistic UI Update
+
         setPhotos((prevPhotos) =>
             prevPhotos.map((img) =>
                 img._id === image._id ? { ...img, comments: [newComment, ...img.comments] } : img
@@ -66,7 +63,7 @@ const Photo = ({ allImages, isShared = false }) => {
             console.error("Failed to update comment:", error);
         }
 
-        setImageComment(""); // Clear input field after submitting
+        setImageComment("");
     };
 
     return (

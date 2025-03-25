@@ -9,8 +9,8 @@ export const Home = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const [loginData, setLoginData] = useState({
-    email: 'kingkhan@gmail.com',
-    password: '1234'
+    email: 'guestuser@gmail.com',
+    password: '123456'
   })
 
   const navigate = useNavigate()
@@ -61,7 +61,21 @@ export const Home = () => {
     <div className="d-flex vh-100 align-items-center justify-content-center bg-dark text-light">
       <div className="card p-4 shadow-lg" style={{ width: "400px" }}>
         <div className="card-header text-center">
-          <h2 className="">Login to TimeLens</h2>
+          <h2
+            className="my-3 ms-3 fw-bold"
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "700",
+              fontFamily: "'Pacifico', cursive",
+              color: "#ff6b6b",
+              textShadow: "3px 3px 5px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <span style={{ color: "#2C3E50" }}>Login to </span>
+            Time
+            <span style={{ color: "#48C9B0" }}>Lens</span>
+          </h2>
+
         </div>
         <div className="card-body">
           <div className="mb-3">
@@ -103,8 +117,10 @@ export const Home = () => {
             </button>
           </div>
           <hr />
-          <a href="" className="text-center mt-3"></a>
-          <Link to={'/signup'}>Don't have an account? SingUp!</Link>
+          <div className="text-center">
+            <Link to={'/signup'}>Don't have an account? SingUp!</Link>
+          </div>
+
         </div>
       </div>
     </div>

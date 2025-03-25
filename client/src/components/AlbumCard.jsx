@@ -84,7 +84,6 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
             return;
         }
 
-        // Optimistic UI update
         const updatedSharedWith = [...alb.sharedWith, shareAlbumWith];
         const updatedAlbums = albums.map((album) =>
             album._id === alb._id ? { ...album, sharedWith: updatedSharedWith } : album
@@ -98,7 +97,7 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
         } catch (error) {
             console.error("Failed to share album:", error);
             setAddEmailSuccessMessage("Failed to share album")
-            setAlbums(albums); // Rollback UI
+            setAlbums(albums);
         }
 
         setShareAlbumWith("");
@@ -109,7 +108,7 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
     };
 
     const removeEmailHandler = async ({ alb, mail }) => {
-        // Optimistic UI update
+
         const updatedList = alb.sharedWith.filter((email) => email !== mail);
         const updatedAlbums = albums.map((album) =>
             album._id === alb._id ? { ...album, sharedWith: updatedList } : album
@@ -120,7 +119,7 @@ const AlbumCard = ({ allAlbums, sharedAlbums = null }) => {
             await dispatch(updateAAlbum({ id: alb._id, updatedData: { sharedWith: updatedList } }));
         } catch (error) {
             console.error("Failed to remove email:", error);
-            setAlbums(albums); // Rollback UI
+            setAlbums(albums);
         }
     };
 

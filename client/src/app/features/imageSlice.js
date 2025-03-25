@@ -7,8 +7,6 @@ export const uploadAImage = createAsyncThunk(
     const token = sessionStorage.getItem("access_token");
     if (!token) return rejectWithValue("No token found");
     try {
-      console.log("What I get at image slice:", imageData);
-
       const formData = new FormData();
       formData.append("image", imageData.image);
       formData.append("albumId", imageData.albumId);
@@ -72,7 +70,7 @@ export const getAnAlbumImages = createAsyncThunk(
           },
         }
       );
-      console.log("Selected album images are : ", response.data);
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -117,7 +115,7 @@ export const deleteTheImage = createAsyncThunk(
           },
         }
       );
-      console.log("Deleted image : ", response.data);
+
       return response.data;
     } catch (error) {
       console.error("Image fetch error:", error);
@@ -217,7 +215,6 @@ export const imageSlice = createSlice({
       .addCase(getAnAlbumImages.fulfilled, (state, action) => {
         state.status = "success";
         state.anAlbumImages = action.payload.albumImages;
-        console.log("state.anAlbumImages after update : ", state.anAlbumImages);
       })
       .addCase(getAnAlbumImages.rejected, (state, action) => {
         state.status = "error";

@@ -25,13 +25,12 @@ export const GoogleProfile = () => {
       if (googleAccessToken) {
         try {
           // Retrieve user info
-          console.log("Executing if statement")
           const userResponse = await googleApiAxios.get("/userinfo", {
             headers: {
               Authorization: `Bearer ${googleAccessToken}`,
             },
           });
-          console.log("executing if statements if statement")
+
           if (!userData || userData.email !== userResponse.data.email) {
             setUserData(userResponse.data);  // Only update state when needed
             dispatch(saveLoginUser(userResponse.data))
@@ -44,9 +43,8 @@ export const GoogleProfile = () => {
         }
       } else if (location.pathname.includes("v2")) {
         try {
-          console.log("executing if statements else if statement")
+
           const response = await authServerAxios.get("/user/profile/google");
-          // console.log("Printing accessToken 2 : ", access_token)
           if (!userData || userData.email !== response.data.email) {
             setUserData(response.data);  // Only update state when needed
             dispatch(saveLoginUser(response.data))

@@ -28,12 +28,10 @@ const Favorite = () => {
                             <p className="mt-2 text-success fw-bold">Fetching your favorite images... Hold tight! 🌟</p>
                         </div>
                     ) : favImages.length === 0 ? (
-                        // No favorite images found
                         <div className="text-center mt-4">
                             <p className="text-danger fw-bold">No favorite images found. Start marking your favorites! ❤️</p>
                         </div>
                     ) : (
-                        // Display favorite images
                         <Photo allImages={favImages} />
                     )}
                 </div>

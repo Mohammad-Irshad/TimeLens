@@ -42,8 +42,6 @@ const SharedWithMe = () => {
                     ) : (
                         <AlbumCard allAlbums={null} sharedAlbums={albumsSharedwithMe} />
                     )}
-
-
                 </div>
             </div>
         </div>

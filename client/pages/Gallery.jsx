@@ -48,23 +48,23 @@ const Gallery = () => {
     }
 
     const handleFileChange = (event) => {
-        const file = event.target.files[0];
+        const file = event.target.files[0]
         const maxSize = 5 * 1024 * 1024; // 5MB max size
-        const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"]; // Allowed image types
+        const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"]
 
         if (file) {
             if (!allowedTypes.includes(file.type)) {
-                setFileValidationError("Invalid file type. Please upload a JPG, PNG, GIF, or WEBP image.");
+                setFileValidationError("Invalid file type. Please upload a JPG, PNG, GIF, or WEBP image.")
                 return;
             }
 
             if (file.size > maxSize) {
-                setFileValidationError("File size exceeds 5MB. Please upload a smaller file.");
+                setFileValidationError("File size exceeds 5MB. Please upload a smaller file.")
                 return;
             }
 
-            setImageAndMetaData((prev) => ({ ...prev, image: file }));
-            setFileValidationError("");
+            setImageAndMetaData((prev) => ({ ...prev, image: file }))
+            setFileValidationError("")
         }
     }
 
@@ -77,9 +77,8 @@ const Gallery = () => {
         try {
             setAddImageLoader(true)
             const result = await dispatch(uploadAImage(imageAndMetaData)).unwrap()
-            // console.log("Image upload result is : ", result)
             setFilteredImages((prevImages) => {
-                return [...prevImages, result.uploadedImage]; // Ensure correct update
+                return [...prevImages, result.uploadedImage]
             })
             setImageUploadMessage("Image uploaded successfully")
             clearFormData()
@@ -114,23 +113,23 @@ const Gallery = () => {
             img.persons.some(person => person.toLowerCase().trim().includes(value))
         );
         setFilteredImages(results);
-    };
+    }
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 dispatch(getAllTheAlbums(imageAndMetaData.ownerId));
-                setImagesLoading(true); // Set loading to true while fetching
-                const result = await dispatch(getAllTheImages(logedInUser._id)).unwrap();
-                setFilteredImages(result.allImages); // Set images once fetched
+                setImagesLoading(true)
+                const result = await dispatch(getAllTheImages(logedInUser._id)).unwrap()
+                setFilteredImages(result.allImages)
             } catch (error) {
-                console.error("Error while fetching data:", error);
+                console.error("Error while fetching data:", error)
             } finally {
-                setImagesLoading(false); // Set loading to false after fetch
+                setImagesLoading(false)
             }
         };
-        fetchData();
-    }, []);
+        fetchData()
+    }, [])
 
 
     return (
@@ -142,7 +141,6 @@ const Gallery = () => {
 
                 <div className="col-md-9 col-lg-10 bg-light p-4">
                     <input type='text' placeholder='Search photo...' className='form-control' onChange={handleSearch} />
-
 
                     <div className='d-flex justify-content-between my-4'>
                         <h3>Your Photos</h3>
@@ -166,8 +164,6 @@ const Gallery = () => {
                     )}
                 </div>
             </div>
-
-
 
             <div className="modal fade" id="photoModal" tabIndex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
@@ -196,10 +192,9 @@ const Gallery = () => {
                                 <input type='text' placeholder='Enter person name separated by comma (Ex: shahrukh, salman)' id='imageTagPerson' className='form-control form-control-sm' name='persons' value={imageAndMetaData.persons} onChange={handleMetaDataChange} />
                             </form>
                         </div>
-                        {imageUploadMessage && <p className='text-success'>{imageUploadMessage}</p>}
+                        {imageUploadMessage && <p className='text-success container'>{imageUploadMessage}</p>}
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={clearFormData}>Close</button>
-
                             {
                                 addImageLoader ?
                                     <div class="spinner-border text-danger" role="status">
@@ -207,7 +202,6 @@ const Gallery = () => {
                                     </div> :
                                     <button type="button" className="btn btn-primary" onClick={submithandler}>Add Image</button>
                             }
-
                         </div>
                     </div>
                 </div>

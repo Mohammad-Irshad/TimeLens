@@ -60,7 +60,7 @@ export const updateAAlbum = createAsyncThunk(
           },
         }
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -82,7 +82,7 @@ export const deleteAAlbum = createAsyncThunk(
           },
         }
       );
-      console.log("Deleted album : ", response.data);
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -104,7 +104,7 @@ export const getAllTheSharedAlbums = createAsyncThunk(
           },
         }
       );
-      console.log("All shared albums", response.data);
+
       return response.data;
     } catch (error) {
       console.error("Shared album fetch error:", error);

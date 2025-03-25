@@ -16,8 +16,6 @@ const SideBar = () => {
         navigate("/")
     }
 
-
-
     return (
         <div className="">
             <h4 className="my-3 ms-3 fw-bold" style={{
@@ -29,15 +27,6 @@ const SideBar = () => {
             }}>
                 Time<span style={{ color: "#48C9B0" }}>Lens</span>
             </h4>
-
-
-
-
-
-
-
-
-
 
             <nav className="nav flex-column">
                 <NavLink

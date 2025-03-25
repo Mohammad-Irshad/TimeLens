@@ -47,7 +47,20 @@ const SignUp = () => {
         <div className="container-fluid d-flex flex-column align-items-center justify-content-center vh-100 text-light bg-dark">
             <div className="card text-center p-4 shadow-lg" style={{ width: "400px" }}>
                 <div className='card-header'>
-                    <h2>SignUp to TimeLens</h2>
+                    <h2
+                        className="my-3 ms-3 fw-bold"
+                        style={{
+                            fontSize: "1.8rem",
+                            fontWeight: "700",
+                            fontFamily: "'Pacifico', cursive",
+                            color: "#ff6b6b",
+                            textShadow: "3px 3px 5px rgba(0, 0, 0, 0.2)",
+                        }}
+                    >
+                        <span style={{ color: "#2C3E50" }}>SignUp to </span>
+                        Time
+                        <span style={{ color: "#48C9B0" }}>Lens</span>
+                    </h2>
                 </div>
                 <div className="card-body">
 
@@ -55,7 +68,7 @@ const SignUp = () => {
                     <input type='email' placeholder='Enter your email' name='email' value={userData.email} className='form-control' onChange={(e) => updateUserData(e)} /><br />
                     <input type='password' placeholder='Enter your password' name='password' value={userData.password} className='form-control' onChange={(e) => updateUserData(e)} /><br />
 
-                    <div className='text-start'>
+                    <div className='d-grid'>
                         <button className='btn btn-success' onClick={handleUserSingUp}>
                             {isSigningUp ? (
                                 <>

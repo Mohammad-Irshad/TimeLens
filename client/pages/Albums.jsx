@@ -42,7 +42,7 @@ const Albums = () => {
         } finally {
             setAddAlbum(false)
         }
-    };
+    }
 
     const searchAlbum = (e) => {
         const value = e.target.value.toLowerCase().trim()
@@ -54,15 +54,13 @@ const Albums = () => {
         if (logedInUser) {
             dispatch(getAllTheAlbums(logedInUser?._id))
         }
-    }, [logedInUser, dispatch]) // ✅ Run only when user changes
+    }, [logedInUser, dispatch])
 
-    // ✅ Update filteredAlbum when allAlbums changes
     useEffect(() => {
         if (status === 'success' && allAlbums?.length > 0) {
             setFilteredAlbum(allAlbums)
         }
     }, [allAlbums, status])
-
 
 
     return (

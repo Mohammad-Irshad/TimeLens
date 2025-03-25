@@ -49,12 +49,12 @@ export const userSlice = createSlice({
     saveLoginUser: (state, action) => {
       const access_token = Cookies.get("access_token");
       state.logedInUser = action.payload;
-      sessionStorage.setItem("userData", JSON.stringify(action.payload)); // ✅ Save to sessionStorage
+      sessionStorage.setItem("userData", JSON.stringify(action.payload)); // Save to sessionStorage
       sessionStorage.setItem("access_token", access_token);
     },
     logoutUser: (state) => {
       state.logedInUser = {};
-      sessionStorage.removeItem("userData"); // ✅ Clear sessionStorage on logout
+      sessionStorage.removeItem("userData"); // Clear sessionStorage on logout
       sessionStorage.removeItem("access_token");
     },
   },
